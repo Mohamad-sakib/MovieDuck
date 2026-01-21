@@ -100,6 +100,7 @@ function MovieduxGrid({ movies, watchlist, toggleWatchList }) {
             movie={movie}
             isWatchListed={watchlist.includes(movie.id)}
             toggleWatchList={toggleWatchList}
+            key={movie.id}
           />
         ))}
       </div>
