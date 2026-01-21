@@ -5,8 +5,26 @@ import Footer from "./components/Footer";
 import MovieduxGrid from "./components/MovieduxGrid";
 import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import WatchList from "./components/WatchList";
+import React, { useEffect, useState } from "react";
 
 function App() {
+  const [movies, setMovies] = useState([]);
+  const [watchlist, setWatchList] = useState([]);
+
+  const toggleWatchList = (movieId) => {
+    setWatchList((prev) =>
+      prev.includes(movieId)
+        ? prev.filter((id) => movieId !== id)
+        : [...prev, movieId],
+    );
+  };
+
+  useEffect(() => {
+    fetch("movies.json")
+      .then((response) => response.json())
+      .then((data) => setMovies(data));
+  }, []);
+
   return (
     <div className="App">
       <div className="container">
@@ -23,8 +41,26 @@ function App() {
             </ul>
           </nav>
           <Routes>
-            <Route path="/" element={<MovieduxGrid />}></Route>
-            <Route path="/watchlist" element={<WatchList />}></Route>
+            <Route
+              path="/"
+              element={
+                <MovieduxGrid
+                  movies={movies}
+                  watchlist={watchlist}
+                  toggleWatchList={toggleWatchList}
+                />
+              }
+            ></Route>
+            <Route
+              path="/watchlist"
+              element={
+                <WatchList
+                  movies={movies}
+                  watchlist={watchlist}
+                  toggleWatchList={toggleWatchList}
+                />
+              }
+            ></Route>
           </Routes>
         </Router>
       </div>

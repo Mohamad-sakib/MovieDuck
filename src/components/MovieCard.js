@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function MovieCard({ movie }) {
+export default function MovieCard({ movie, isWatchListed, toggleWatchList }) {
   const handleError = (e) => {
     e.target.src = "images/default.jpg";
   };
